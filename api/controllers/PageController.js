@@ -4,6 +4,8 @@
  * @description :: Server-side logic for managing Pages
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+var passport = require('passport');
+
 
 module.exports = {
 
@@ -18,24 +20,24 @@ module.exports = {
 
     // Otherwise, look up the logged-in user and show the logged-in view,
     // bootstrapping basic user data in the HTML sent from the server
-    User.findOne(req.session.me, function (err, user){
-      if (err) {
-        return res.negotiate(err);
-      }
+    // User.findOne(req.session.me, function (err, user){
+    //   if (err) {
+    //     return res.negotiate(err);
+    //   }
 
-      if (!user) {
-        sails.log.verbose('No user Found !!!');
-        return res.redirect('/');
-      }
+    //   if (!user) {
+    //     sails.log.verbose('No user Found !!!');
+    //     return res.redirect('/');
+    //   }
 
-      return res.redirect('/dashboard');
-    });
+    //   return res.redirect('/dashboard');
+    // });
   },
 
   dashboard: function(req, res){
 
     
-          return res.view('dashboard');
+          return res.view('dashboard', {user: req.session.me});
     
   }
 	

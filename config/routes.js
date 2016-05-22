@@ -33,7 +33,9 @@ module.exports.routes = {
   ***************************************************************************/
 
   'GET /': 'PageController.showHomePage',
-  'GET /dashboard': 'PageController.dashboard'
+  'GET /dashboard': 'PageController.dashboard',
+  'GET /auth/google': 'UserController.google',
+  'GET /oauth2callback': 'UserController.googleCallback'
 
   /***************************************************************************
   *                                                                          *
