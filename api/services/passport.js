@@ -31,10 +31,12 @@ function findBygoogleId(id, fn) {
   });
 }
 
+//save the user ID in the session as req.session.passport.user = {id : "xxxx"} 
 passport.serializeUser(function (user, done) {
   done(null, user.id);
 });
 
+//retrieve the whole object with user id from database and store it in req.user
 passport.deserializeUser(function (id, done) {
   findById(id, function (err, user) {
     done(err, user);
@@ -42,14 +44,17 @@ passport.deserializeUser(function (id, done) {
 });
 
 passport.use(new GoogleStrategy({
-    clientID: "YOUR-CLIENT-ID",
-    clientSecret: "YOUR-CLIENT-SECRET",
+    clientID: "secret",
+    clientSecret: "secret",
     callbackURL: "http://localhost:1337/oauth2callback",
     passReqToCallback: true
-  }, function (req, accessToken, refreshToken, profile, done) {
+  }, function (req, accessToken, refreshToken, params, profile, done) {
 
-    // sails.log.debug("checkpoint.... !!!!!")
-  	// sails.log.debug('auth profile', profile);
+  	 sails.log.debug('auth refreshToken :    ' + refreshToken);
+
+     sails.log.debug('auth accessToken :    ', accessToken);
+
+     sails.log.debug('auth params :    ', params);
 
     findBygoogleId(profile.id, function (err, user) {
 
@@ -70,7 +75,7 @@ passport.use(new GoogleStrategy({
         }).exec(function createCB (err, user) {
           if (user) {
             req.session.me = profile.displayName;
-            req.session.fbAccessToken = accessToken;
+            req.session.GAccessToken = accessToken;
             return done(null, user, {
               message: 'Logged In Successfully'
             });
@@ -85,7 +90,7 @@ passport.use(new GoogleStrategy({
       // If there is already a user, return it
       } else {
         req.session.me = profile.displayName;
-        req.session.fbAccessToken = accessToken;
+        req.session.GAccessToken = accessToken;
         return done(null, user, {
           message: 'Logged In Successfully'
         });

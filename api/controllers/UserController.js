@@ -11,7 +11,7 @@ module.exports = {
 	
 	'google': function (req, res, next) {
      
-     	passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] })(req, res, next);
+     	passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'https://mail.google.com/'] })(req, res, next);
   	},
 
   	
@@ -28,8 +28,8 @@ module.exports = {
       			if (err) { return next(err); }
       			
       			req.session.authenticated = true;
-      			console.log(req.user);
-      			console.log(req.session.me);
+      			// console.log(req.user);
+      			// console.log(req.session.me);
       			
       			return res.redirect('/dashboard');
     		});

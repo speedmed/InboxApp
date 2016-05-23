@@ -28,6 +28,14 @@ module.exports.policies = {
 
    '*': true,
 
+   UserController : {
+   	'google':  true,
+   	'googleCallback': true,
+   	'*': 'sessionAuth'
+   },
+
+   MailController : 'sessionAuth',
+
    PageController : {
 
     'dashboard': 'sessionAuth',

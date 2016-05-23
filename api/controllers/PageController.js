@@ -36,7 +36,8 @@ module.exports = {
 
   dashboard: function(req, res){
 
-    
+          // console.log('', req.isAuthenticated());
+          
           return res.view('dashboard', {user: req.session.me});
     
   }
