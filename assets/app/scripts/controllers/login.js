@@ -7,8 +7,8 @@
  * # MainCtrl
  * Controller of yapp
  */
-angular.module('yapp')
-  .controller('LoginCtrl', function($scope, $location) {
+
+App.controller('LoginCtrl', function($scope, $location) {
 
   	$scope.loginForm = {};
 

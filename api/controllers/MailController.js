@@ -51,7 +51,7 @@
 			//loop through messages response
 			async.each(response.messages, function(message, callback) {
       			
-      			//get specific email by ID and build the mail object before push it to mails array
+      			//get specific email informations by ID and build the mail object before push it to mails array
       			gmail.users.messages.get({ userId: 'me', id: message.id}, function(err, resp){
 	      			
 	      			if(resp.payload){
@@ -62,8 +62,6 @@
 						mail = {from:hFrom[0].value, to:hTo[0].value, subject:resp.snippet}
 					}	
 	      			
-	      			
-	      			
 	      			mails.push(mail);
 					
 					callback();
@@ -71,9 +69,8 @@
     
     		}, function(err) {
 
-    			//finally build the object returned to view with nextPAgeToken
-
-    			var finalList = {emails: mails, nextPageToken:response.nextPageToken};
+    			//finally build the object returned to the view with a nextPAgeToken
+				var finalList = {emails: mails, nextPageToken:response.nextPageToken};
     			return res.json(finalList);
     		});
 
@@ -88,26 +85,31 @@
 
 	      	var gmail = google.gmail({auth: auth, version: 'v1'});
 	      	
+	      	//get email by id and after that we extract body
 	      	gmail.users.messages.get({ userId: 'me', id: req.param('id')}, function(err, resp){
 
 	      		if(err){
 	      			return res.status(err.code).json(err.message);
 	      		}
 
-	      		if(resp.payload.mimeType == "multipart/alternative"){
+	      		// we extract body based on the mimeType
+	      		if(resp.payload.mimeType.indexOf("multipart") > -1 ){
 	      			 
 	      			 body = resp.payload.parts[0].body.data;
-	      		}else{
+	      		}else if(resp.payload.mimeType.indexOf("text") > -1 ){
 	      			 body = resp.payload.body.data;
 	      		}
 
+	      		//build mail object and send it to the view
 	      		if(body){
 	      			var b64string = body.replace(/-/g, '+').replace(/_/g, '/');
 	      			var buf = new Buffer(b64string, 'base64').toString("ascii");
-	      			mail = {subject:resp.snippet, body: buf}
+	      			var mail = {subject:resp.snippet, body: buf}
 	      		}else{
-	      			mail = {subject:resp.snippet, body: body}
+	      			var mail = {subject:resp.snippet, body: body}
 	      		}
+
+	      		return res.json(mail);
 
 	      	});
 

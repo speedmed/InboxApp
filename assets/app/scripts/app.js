@@ -8,12 +8,9 @@
  *
  * Main module of the application.
  */
-angular
-  .module('yapp', [
-    'ui.router',
-    'ngAnimate'
-  ])
-  .config(function($stateProvider, $urlRouterProvider) {
+var App = angular.module('Myapp', ['ui.router', 'ngAnimate', 'ngResource']);
+
+  App.config(function($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.when('/', '/inbox');
     $urlRouterProvider.otherwise('/');
@@ -24,7 +21,8 @@ angular
           .state('inbox', {
             url: '/inbox',
             parent: '',
-            templateUrl: '/templates/views/dashboard/inbox.html'
+            templateUrl: '/templates/views/dashboard/inbox.html',
+            controller : 'InboxController as ctrl'
           })
           .state('sent', {
             url: '/sent',

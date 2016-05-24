@@ -7,8 +7,8 @@
  * # MainCtrl
  * Controller of yapp
  */
-angular.module('yapp')
-  .controller('DashboardCtrl', function($scope, $state) {
+
+App.controller('DashboardCtrl', function($scope, $state) {
 
     $scope.$state = $state;
 
