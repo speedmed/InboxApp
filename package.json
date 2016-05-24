@@ -5,6 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "async": "^2.0.0-rc.5",
     "base64url": "^1.0.6",
     "bower": "^1.7.9",
     "ejs": "2.3.4",
@@ -26,7 +27,8 @@
     "passport-google-oauth": "^1.0.0",
     "rc": "1.0.1",
     "sails": "~0.12.3",
-    "sails-disk": "~0.10.9"
+    "sails-disk": "~0.10.9",
+    "underscore": "^1.8.3"
   },
   "scripts": {
     "debug": "node debug app.js",

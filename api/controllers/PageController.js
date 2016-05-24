@@ -16,22 +16,12 @@ module.exports = {
       
       return res.view('index');
 
+    }else{
+
+      return res.redirect("/dashboard");
+
     }
 
-    // Otherwise, look up the logged-in user and show the logged-in view,
-    // bootstrapping basic user data in the HTML sent from the server
-    // User.findOne(req.session.me, function (err, user){
-    //   if (err) {
-    //     return res.negotiate(err);
-    //   }
-
-    //   if (!user) {
-    //     sails.log.verbose('No user Found !!!');
-    //     return res.redirect('/');
-    //   }
-
-    //   return res.redirect('/dashboard');
-    // });
   },
 
   dashboard: function(req, res){
