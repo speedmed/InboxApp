@@ -26,7 +26,7 @@
 	      	gmail.users.messages.list({ userId: 'me', labelIds: [req.param('label')], maxResults:5, pageToken:req.param('page') }, function(err, response){
 
 	      		if(err){
-	      			return res.status(err.code).json(err.message);
+	      			return res.status(err.code).json(err.message);// please login
 	      		}
 
 	      		module.exports.getMailsInfo(response, req, res);
@@ -52,14 +52,14 @@
 			async.each(response.messages, function(message, callback) {
       			
       			//get specific email informations by ID and build the mail object before push it to mails array
-      			gmail.users.messages.get({ userId: 'me', id: message.id}, function(err, resp){
+      			gmail.users.messages.get({ userId: 'me', id: message.id, format:'metadata'}, function(err, resp){
 	      			
 	      			if(resp.payload){
 	      				//get the field with name
 	      				var hFrom = _.where(resp.payload.headers, {name: "From"});
 						var hTo = _.where(resp.payload.headers, {name: "To"});
 						
-						mail = {from:hFrom[0].value, to:hTo[0].value, subject:resp.snippet}
+						mail = {id:resp.id, from:hFrom[0].value, to:hTo[0].value, subject:resp.snippet, date:resp.internalDate}
 					}	
 	      			
 	      			mails.push(mail);
@@ -86,27 +86,27 @@
 	      	var gmail = google.gmail({auth: auth, version: 'v1'});
 	      	
 	      	//get email by id and after that we extract body
-	      	gmail.users.messages.get({ userId: 'me', id: req.param('id')}, function(err, resp){
+	      	gmail.users.messages.get({ userId: 'me', id: req.param('id'), format:'raw'}, function(err, resp){
 
 	      		if(err){
 	      			return res.status(err.code).json(err.message);
 	      		}
 
 	      		// we extract body based on the mimeType
-	      		if(resp.payload.mimeType.indexOf("multipart") > -1 ){
+	      		// if(resp.payload.mimeType.indexOf("multipart") > -1 ){
 	      			 
-	      			 body = resp.payload.parts[0].body.data;
-	      		}else if(resp.payload.mimeType.indexOf("text") > -1 ){
-	      			 body = resp.payload.body.data;
-	      		}
+	      		// 	 body = resp.payload.parts[0].body.data;
+	      		// }else if(resp.payload.mimeType.indexOf("text") > -1 ){
+	      		// 	 body = resp.payload.body.data;
+	      		// }
 
 	      		//build mail object and send it to the view
-	      		if(body){
-	      			var b64string = body.replace(/-/g, '+').replace(/_/g, '/');
+	      		if(resp.raw){
+	      			var b64string = resp.raw.replace(/-/g, '+').replace(/_/g, '/');
 	      			var buf = new Buffer(b64string, 'base64').toString("ascii");
 	      			var mail = {subject:resp.snippet, body: buf}
 	      		}else{
-	      			var mail = {subject:resp.snippet, body: body}
+	      			var mail = {subject:'Error to get email', body: resp.raw}
 	      		}
 
 	      		return res.json(mail);

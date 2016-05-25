@@ -11,7 +11,7 @@ module.exports = {
 	
 	'google': function (req, res, next) {
      
-     	passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'https://mail.google.com/'] })(req, res, next);
+     	passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'https://mail.google.com/'],accessType: 'offline' })(req, res, next);
   	},
 
   	

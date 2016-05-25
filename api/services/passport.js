@@ -50,7 +50,7 @@ passport.use(new GoogleStrategy({
     passReqToCallback: true
   }, function (req, accessToken, refreshToken, params, profile, done) {
 
-  	 sails.log.debug('auth refreshToken :    ' + refreshToken);
+  	 sails.log.debug('auth refreshToken :    ', refreshToken);
 
      sails.log.debug('auth accessToken :    ', accessToken);
 
