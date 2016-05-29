@@ -54,7 +54,7 @@ passport.use(new GoogleStrategy({
 
      sails.log.debug('auth accessToken :    ', accessToken);
 
-     sails.log.debug('auth params :    ', params);
+     sails.log.debug('auth params :    ', profile);
 
     findBygoogleId(profile.id, function (err, user) {
 

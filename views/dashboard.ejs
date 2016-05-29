@@ -13,7 +13,9 @@
     <!-- build:css(.tmp) styles/main.css -->
     
     <!--STYLES-->
+    <link rel="stylesheet" href="/styles/css/bootstrap-social.css">
     <link rel="stylesheet" href="/styles/css/main.css">
+    <link rel="stylesheet" href="/styles/font-awesome-4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="/styles/importer.css">
     <!--STYLES END-->
     <!-- endbuild -->
@@ -36,9 +38,10 @@
         
       </div><br />
 
-      <div class="text-center"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <%= user %></div>
-
+      <div class="text-center"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <%= user %></div><br /><br />
+      <div class="text-center"><a class="btn btn-warning " ui-sref="compose">Compose <span class="sr-only">(current)</span></a></div>
       <ul class="nav nav-sidebar">
+
         <li ng-class="{active: $state.includes('inbox')}"><a ui-sref="inbox">Inbox <span class="sr-only">(current)</span></a></li>
         <li ng-class="{active: $state.includes('sent')}"><a ui-sref="sent">Sent Mail</a></li>
         <li ng-class="{active: $state.includes('drafts')}"><a ui-sref="drafts">Drafts</a></li>
@@ -81,6 +84,7 @@
     <script src="/bower_components/ui-router/release/angular-ui-router.js"></script>
     <script src="/bower_components/angular-animate/angular-animate.js"></script>
     <script src="/app/scripts/app.js"></script>
+    <script src="/app/scripts/controllers/compose.js"></script>
     <script src="/app/scripts/controllers/dashboard.js"></script>
     <script src="/app/scripts/controllers/inboxController.js"></script>
     <script src="/app/scripts/controllers/login.js"></script>

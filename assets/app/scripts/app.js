@@ -33,6 +33,12 @@ var App = angular.module('Myapp', ['ui.router', 'ngAnimate', 'ngResource']);
             url: '/drafts',
             parent: '',
             templateUrl: '/templates/views/dashboard/drafts.html'
+          })
+          .state('compose', {
+            url: '/compose',
+            parent: '',
+            templateUrl: '/templates/views/dashboard/compose.html',
+            controller : 'ComposeController as ctrl'
           });
 
   });

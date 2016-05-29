@@ -37,7 +37,8 @@ module.exports.routes = {
   'GET /auth/google': 'UserController.google',
   'GET /oauth2callback': 'UserController.googleCallback',
   'GET /getMails/:label': 'MailController.getMails',
-  'GET /mail/:id': 'MailController.getMailsBody'
+  'GET /mail/:id': 'MailController.getMailsBody',
+  'POST /compose': 'MailController.sendMail'
 
   /***************************************************************************
   *                                                                          *

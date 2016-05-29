@@ -6,7 +6,12 @@ App.factory('Inbox', ['$resource', function ($resource) {
     		{
     			update: {
     			      method: 'PUT' // To send the HTTP Put request when calling this custom update method.
-    			}
+    			},
+                
+                compose: { 
+                      url: 'http://localhost:1337/compose', 
+                      method: 'POST', 
+                }
     		}
     );
 }]);

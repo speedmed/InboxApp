@@ -107,6 +107,25 @@
 	      	});
 
 	      	
+		},
+
+		sendMail : function(req, res){
+
+			auth.setCredentials({
+	        	access_token: req.session.GAccessToken,
+	        	refresh_token: ''
+	      	});
+
+	      	var mail = req.body;
+
+	      	var gmail = google.gmail({auth: auth, version: 'v1'});
+
+	      	var mail = MailService.buildMail(mail.from, mail.to, mail.subject, mail.msg);
+
+	      	gmail.users.messages.send({userId: 'me', resource: { raw: mail } }, function(err, resp){
+	      		res.send(err || resp);
+	      	});
+
 		}
 		
 	};
